@@ -24,13 +24,16 @@ $ k6 run script.js
 
 # Example scripts
 End to End CAP Sflight API test [sflightAPI.js](./sflightAPI.js)
+
 End to End CAP Sflight app deployed in BTP Launchpad [sflightLaunchpadE2E.js](./sflightLaunchpadE2E.js)
 
 ## Output
 ![sflightLaunchpadE2E where failed to meet](./k6_test.PNG)
 
 
-Note some thresholds not met, We want the 95th percentile of all HTTP request durations to be less than 500ms and it was much higher as we scaled up the Virtual Users, this is where the CF Autoscaling helps, trigger new instances to meet the load
+Note some thresholds not met, We want the 95th percentile of all HTTP request durations to be less than 500ms and it was much higher as we scaled up the Virtual Users
+
+see [Test Application Autoscaler](https://github.com/SAP-samples/btp-build-resilient-apps/tree/main/tutorials/13_setupautoscaler) this is where the CF Autoscaling helps, trigger new instances to meet the changes in workload
 
 ![sflightLaunchpadE2E where failed to meet](./k6_reporter.PNG)
 

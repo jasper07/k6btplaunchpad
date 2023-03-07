@@ -4,8 +4,7 @@ import { Counter, Rate, Trend } from "k6/metrics";
 
 export const errorRate = new Rate('errors');
 
-// const BASE_URL = 'https://secondphase.launchpad.cfapps.ap10.hana.ondemand.com';
-const BASE_URL = 'https://cswdev.launchpad.cfapps.eu10.hana.ondemand.com';
+const BASE_URL = 'https://secondphase.launchpad.cfapps.ap10.hana.ondemand.com';
 const APPID = '1f37942e-c1d7-471c-aedb-8b5081b63417.sapfecapsflight.sapfecaptravel/processor'
 
 // 1. init code
