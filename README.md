@@ -29,12 +29,32 @@ End to End CAP Sflight API test [sflightAPI.js](./sflightAPI.js)
 End to End CAP Sflight app deployed in BTP Launchpad [sflightLaunchpadE2E.js](./sflightLaunchpadE2E.js)
 
 ## Output
+test-run behavior
+```js script
+  stages: [
+    { target: 50, duration: "1m" }, // Linearly ramp up from 1 to 50 VUs during first minute
+    { target: 50, duration: "3m30s" }, // Hold at 50 VUs for the next 3 minutes and 30 seconds
+    { target: 0, duration: "30s" }     // Linearly ramp down from 50 to 0 50 VUs over the last 30 seconds
+    // // Total execution time will be ~5 minutes
+  ],
+  thresholds: {
+    "http_req_duration": ["p(95)<500"], // We want the 95th percentile of all HTTP request durations to be less than 500ms
+    "http_req_duration{staticAsset:yes}": ["p(99)<250"],   // Requests with the staticAsset tag should finish even faster eg SAPUI5
+    // Thresholds based on the custom metric we defined and use to track application failures
+    "check_failure_rate": [
+      "rate<0.01",      // Global failure rate should be less than 1%
+      { threshold: "rate<=0.05", abortOnFail: true }  // Abort the test early if it climbs over 5%
+    ]
+  }
+```
+test-run results
+
 ![sflightLaunchpadE2E where failed to meet](./k6_test.PNG)
 
 
 Note some thresholds not met, We want the 95th percentile of all HTTP request durations to be less than 500ms and it was much higher as we scaled up the Virtual Users
 
-see [Test Application Autoscaler](https://github.com/SAP-samples/btp-build-resilient-apps/tree/main/tutorials/13_setupautoscaler) this is where the CF Autoscaling helps, trigger new instances to meet the changes in workload
+see [Test Application Autoscaler](https://github.com/SAP-samples/btp-build-resilient-apps/tree/main/tutorials/13_setupautoscaler) this is where the CF Autoscaling helps, trigger new instances to meet the changes in workload and stay within the SLA
 
 ![sflightLaunchpadE2E where failed to meet](./k6_reporter.PNG)
 
