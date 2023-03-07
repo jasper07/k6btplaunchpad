@@ -12,6 +12,7 @@ Another technique that can be used for is continuous performance testing. With c
 - K6 collects a wide range of performance metrics during testing, including response times, error rates, and resource utilization. These metrics can be used to identify performance issues and ensure that SLAs are being met.
 - K6 allows developers to set thresholds for performance metrics. If a threshold is exceeded during testing, K6 can automatically fail the test, indicating that the SLA has not been met.
 - K6 has integrations with a wide range of tools, including Grafana, InfluxDB, and Jenkins etc. This can make it easier to analyse and visualize test results and integrate into DevOps workflows.
+- K6 has many converters, making it easy to convert exising JMeter, Postman, Swagger/OpenAPI and HAR files into K6 tests
 - K6 is very lightweight which means it can be run from any location, by anyone, very handy for determine location based issues
 
 # K6 getting started
@@ -36,6 +37,8 @@ Note some thresholds not met, We want the 95th percentile of all HTTP request du
 see [Test Application Autoscaler](https://github.com/SAP-samples/btp-build-resilient-apps/tree/main/tutorials/13_setupautoscaler) this is where the CF Autoscaling helps, trigger new instances to meet the changes in workload
 
 ![sflightLaunchpadE2E where failed to meet](./k6_reporter.PNG)
+
+[sample report](https://raw.githack.com/jasper07/k6btplaunchpad/main/result.html)
 
 # Conclusion
 Overall, performance testing is an essential part of the development process for developing for the cloud.
