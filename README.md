@@ -12,6 +12,29 @@ Another technique that can be used for is continuous performance testing. With c
 - K6 collects a wide range of performance metrics during testing, including response times, error rates, and resource utilization. These metrics can be used to identify performance issues and ensure that SLAs are being met.
 - K6 allows developers to set thresholds for performance metrics. If a threshold is exceeded during testing, K6 can automatically fail the test, indicating that the SLA has not been met.
 - K6 has integrations with a wide range of tools, including Grafana, InfluxDB, and Jenkins etc. This can make it easier to analyse and visualize test results and integrate into DevOps workflows.
+- K6 is very lightweight which means it can be run from any location, by anyone, very handy for determine location based issues
+
+# K6 getting started
+install
+https://k6.io/docs/get-started/
+
+```
+$ k6 run script.js
+```
+
+# Example scripts
+End to End CAP Sflight API test [sflightAPI.js](./sflightAPI.js)
+End to End CAP Sflight app deployed in BTP Launchpad [sflightLaunchpadE2E.js](./sflightLaunchpadE2E.js)
+
+## Output
+![sflightLaunchpadE2E where failed to meet](./k6_test.PNG)
+
+
+Note some thresholds not met, We want the 95th percentile of all HTTP request durations to be less than 500ms and it was much higher
+
+![sflightLaunchpadE2E where failed to meet](./k6_reporter.PNG)
 
 # Conclusion
-Overall, performance testing is an essential part of the development process for developing for the cloud. By incorporating performance testing and load testing into each sprint, developers can identify and address performance issues early in the development process, which can save time and money in the long run. With the right tools and techniques, in-sprint performance testing can be easily integrated into existing development workflows.
+Overall, performance testing is an essential part of the development process for developing for the cloud.
+
+ By incorporating performance testing and load testing into each sprint, developers can identify and address performance issues early in the development process, which can save time and money in the long run. With the right tools and techniques, in-sprint performance testing can be easily integrated into existing development workflows.
