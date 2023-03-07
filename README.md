@@ -15,6 +15,11 @@ Another technique that can be used for is continuous performance testing. With c
 - K6 has many converters, making it easy to convert existing JMeter, Postman, Swagger/OpenAPI and HAR files into K6 tests
 - K6 is very lightweight which means it can be run from any location, by anyone, very handy for determine location based issues
 
+# Who uses K6?
+[ThoughtWorks says Adopt](https://www.thoughtworks.com/en-au/radar/tools/k6)
+
+[GitLab uses K6](https://gitlab.com/gitlab-org/quality/performance)
+
 # K6 getting started
 install
 https://k6.io/docs/get-started/
