@@ -11,7 +11,7 @@ Another technique that can be used for is continuous performance testing. With c
 - K6 is open source, which means it is free to use and can be customized as needed. This can be particularly useful for small teams or individual developers who may not have the budget for a commercial performance testing tool like LoadRunner.
 - K6 collects a wide range of performance metrics during testing, including response times, error rates, and resource utilization. These metrics can be used to identify performance issues and ensure that SLAs are being met.
 - K6 allows developers to set thresholds for performance metrics. If a threshold is exceeded during testing, K6 can automatically fail the test, indicating that the SLA has not been met.
+- K6 has integrations with a wide range of tools, including Grafana, InfluxDB, and Jenkins etc. This can make it easier to analyse and visualize test results and integrate into DevOps workflows.
 
 # Conclusion
-K6 has integrations with a wide range of tools, including Grafana, InfluxDB, and Jenkins etc. This can make it easier to analyse and visualize test results and integrate into DevOps workflows.
 Overall, performance testing is an essential part of the development process for developing for the cloud. By incorporating performance testing and load testing into each sprint, developers can identify and address performance issues early in the development process, which can save time and money in the long run. With the right tools and techniques, in-sprint performance testing can be easily integrated into existing development workflows.
