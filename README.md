@@ -30,7 +30,7 @@ End to End CAP Sflight app deployed in BTP Launchpad [sflightLaunchpadE2E.js](./
 ![sflightLaunchpadE2E where failed to meet](./k6_test.PNG)
 
 
-Note some thresholds not met, We want the 95th percentile of all HTTP request durations to be less than 500ms and it was much higher
+Note some thresholds not met, We want the 95th percentile of all HTTP request durations to be less than 500ms and it was much higher as we scaled up the Virtual Users, this is where the CF Autoscaling helps, trigger new instances to meet the load
 
 ![sflightLaunchpadE2E where failed to meet](./k6_reporter.PNG)
 
