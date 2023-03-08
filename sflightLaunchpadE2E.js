@@ -42,7 +42,7 @@ const loginData = JSON.parse(open("./users.json"));
 export function setup() {
   DebugOrLog(`== SETUP END btp launchpad authentication - default IDP=====================`)
   //Authentication is always the hardest thing, need to simulate how a browser works, lots of redirects and cookies
-  // OKTA, Ping and Azure AD are a lot easier than the SAP Default IDP :-( 
+  // OKTA, Ping and Azure AD i found a lot easier than the SAP Default IDP :-( 
   let vuJar = http.cookieJar();
   let credentials = loginData.users[Math.floor(Math.random() * 1)];
   //  const credentials = {
@@ -50,10 +50,8 @@ export function setup() {
   //   password: '<<PWD>>'
   // }
 
-  DebugOrLog("setup - btp launchpad authentication - default IDP");
-  ("url 1 " + BASE_URL) //https://secondphase.launchpad.cfapps.ap10.hana.ondemand.com
+  DebugOrLog("url 1 " + BASE_URL) //https://secondphase.launchpad.cfapps.ap10.hana.ondemand.com
   let res = http.get(BASE_URL);
-
 
   // extract values from the javascript in response which would normally set needed cookies
   let [groupinput, signature, redirect] = /signature=(.*?);path=\/;Secure;SameSite=None;";location="(.*)"/.exec(res.body);
