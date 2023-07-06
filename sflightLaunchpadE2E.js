@@ -10,14 +10,14 @@ const APPID = '1f37942e-c1d7-471c-aedb-8b5081b63417.sapfecapsflight.sapfecaptrav
 // 1. init code
 export let options = {
   stages: [
-    { target: 10, duration: "1m" }, // Linearly ramp up from 1 to 50 VUs during first minute
-    { target: 10, duration: "3m30s" }, // Hold at 50 VUs for the next 3 minutes and 30 seconds
+    { target: 50, duration: "1m" }, // Linearly ramp up from 1 to 50 VUs (virtual users) during first minute
+    { target: 50, duration: "3m30s" }, // Hold at 50 VUs for the next 3 minutes and 30 seconds
     { target: 0, duration: "30s" }     // Linearly ramp down from 50 to 0 VUs over the last 30 seconds
     // Total execution time will be ~5 minutes
   ],
   thresholds: {
     "http_req_duration": ["p(95)<500"], // We want the 95th percentile of all HTTP request durations to be less than 500ms
-    "http_req_duration{staticAsset:yes}": ["p(99)<250"], // Requests with the staticAsset tag should finish even faster eg SAPUI5
+    "http_req_duration{staticAsset:yes}": ["p(99)<250"], // Requests with the staticAsset tag should finish even faster eg SAPUI5 CDN
     // Thresholds based on the custom metric we defined and use to track application failures
     "check_failure_rate": [
       "rate<0.01",      // Global failure rate should be less than 1%
@@ -40,9 +40,9 @@ const loginData = JSON.parse(open("./users.json"));
 
 // 2. setup vu
 export function setup() {
-  DebugOrLog(`== SETUP END btp launchpad authentication - default IDP=====================`)
+  DebugOrLog(`== SETUP START btp launchpad authentication - default IDP=====================`)
   //Authentication is always the hardest thing, need to simulate how a browser works, lots of redirects and cookies
-  // OKTA, Ping and Azure AD i found a lot easier than the SAP Default IDP :-( 
+  // OKta, Ping and Azure AD i found a lot easier than the SAP Default IDP and interal IAS :-( 
   let vuJar = http.cookieJar();
   let credentials = loginData.users[Math.floor(Math.random() * 1)];
   //  const credentials = {
@@ -64,7 +64,7 @@ export function setup() {
   // set cookies so the auth remembers the location to goto at the end of saml oauth dance
   vuJar.set(BASE_URL, 'signature', signature);
   vuJar.set(BASE_URL, 'fragmentAfterLogin', '');
-  vuJar.set(BASE_URL, 'locationAfterLogin', '%2Fsite'); //this got me good
+  vuJar.set(BASE_URL, 'locationAfterLogin', '%2Fsite'); //this got me good, on returning to base url it will goto a default place, need this!!
 
   DebugOrLog("url 2 " + redirect) // https://secondphase.authentication.ap10.hana.ondemand.com/oauth/authorize?response_type=code..
   res = http.get(redirect);
@@ -88,13 +88,14 @@ export function setup() {
   });
 
   DebugOrLog("url 7 " + res.url) //https://secondphase.launchpad.cfapps.ap10.hana.ondemand.com/site
+  // if you dont want to do the authentication, grab these two cookies from a logged in user JSESSIONID & __VCAP_ID__'
   check(res, {
     "status is 200'": (r) => res.status === 200,
     "redirected back to start": (r) => res.url.indexOf(BASE_URL) > -1,
     "has 'JSESSIONID' cookie": (r) => vuJar.cookiesForURL(res.url)['JSESSIONID'].length > 0,
     "has '__VCAP_ID__' cookie": (r) => vuJar.cookiesForURL(res.url)['__VCAP_ID__'].length > 0,
   });
-  DebugOrLog(`== SETUP END ===========================================================`)
+  DebugOrLog(`== SETUP END  btp launchpad authentication - default IDP===============`)
   return vuJar.cookiesForURL(res.url);
 }
 
